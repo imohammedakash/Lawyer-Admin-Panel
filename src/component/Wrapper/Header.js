@@ -34,25 +34,25 @@ const Header = () => {
           </div>
           <input placeholder='Search in Admin Panel..' className='border outline-none p-1 md:w-[20rem]' />
         </div>
-        <div className="md:flex items-center justify-center flex-col hidden">
+        <div className="md:flex items-center justify-center flex-col hidden cursor-pointer">
           <div>
             <CiSettings className='text-xl' />
           </div>
           Setting
         </div>
-        <div className="md:flex items-center justify-center flex-col hidden">
+        <div className="md:flex items-center justify-center flex-col hidden cursor-pointer">
           <div>
             <MdOutlineManageHistory className='text-xl' />
           </div>
           History
         </div>
-        <div className="md:flex items-center justify-center flex-col hidden">
+        <div className="md:flex items-center justify-center flex-col hidden cursor-pointer">
           <div>
             <LiaSlidersHSolid className='text-xl' />
           </div>
           filter
         </div>
-        <div onClick={handleLogOut} className="flex items-center justify-center flex-col">
+        <div onClick={handleLogOut} className="flex items-center justify-center flex-col cursor-pointer">
           <div>
             <PiSignOut className='text-xl' />
           </div>
