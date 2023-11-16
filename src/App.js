@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+"use client"
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './component/Login';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux"
+import Home from './component/Home';
+const PrivateRoute = ({ auth, children }) => {
+  return auth ? children : <Navigate to="/login" />;
+};
 
-function App() {
+
+const App = () => {
+  let accessToken = useSelector(state => state?.user?.user?.accessToken);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<PrivateRoute auth={accessToken ? true : false}><Home /></PrivateRoute>} />
+      </Routes>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={true} closeOnClick rtl={false} />
+    </Router>
   );
-}
+};
 
 export default App;
