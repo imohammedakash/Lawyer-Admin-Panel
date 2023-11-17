@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux"
 import Home from './component/Home';
+import RealTime from './Realtime';
 const PrivateRoute = ({ auth, children }) => {
   return auth ? children : <Navigate to="/login" />;
 };
@@ -17,6 +18,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/real-time" element={<RealTime />} />
+
         <Route path="/" element={<PrivateRoute auth={accessToken ? true : false}><Home /></PrivateRoute>} />
       </Routes>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={true} closeOnClick rtl={false} />
