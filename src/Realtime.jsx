@@ -1,43 +1,36 @@
 import React, { useState, useEffect } from 'react';
 
-const LocationByGPS = () => {
+const RealTimeLocation = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            setLocation({ latitude, longitude });
-          },
-          (err) => {
-            setError(`Geolocation error: ${err.message}`);
-          }
-        );
-      } else {
-        setError('Geolocation is not supported by your browser');
+    const watchLocation = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+      },
+      (error) => {
+        console.error('Error getting geolocation:', error.message);
+        setError('Error getting geolocation. Please check your browser settings.');
       }
-    };
+    );
 
-    fetchLocation();
-  }, []);
+    // Cleanup the watcher when the component unmounts
+    return () => navigator.geolocation.clearWatch(watchLocation);
+  }, []); // The empty dependency array ensures the effect runs only once
 
   return (
     <div>
+      <h1>Real-Time Location</h1>
       {location ? (
-        <div>
-          <h3>Location Information</h3>
-          <p>Latitude: {location.latitude}</p>
-          <p>Longitude: {location.longitude}</p>
-        </div>
+        <p>Latitude: {location.latitude}, Longitude: {location.longitude}</p>
       ) : (
-        <p>Loading location information...</p>
+        <p>Loading location...</p>
       )}
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
 
-export default LocationByGPS;
+export default RealTimeLocation;
